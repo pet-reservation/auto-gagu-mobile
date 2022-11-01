@@ -7,13 +7,18 @@ import {
 } from '@tanstack/react-query';
 import React from 'react';
 import { RecoilRoot } from 'recoil';
+import { GlobalStyle } from 'styles/Global';
+import { Theme } from 'styles/Theme';
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
   return (
     <QueryClientProvider client={queryClient}>
-      <Hydrate>
+      <Hydrate state={pageProps.dehydratedState}>
         <RecoilRoot>
-          <Component {...pageProps} />
+          <ThemeProvider theme={Theme}>
+            <GlobalStyle />
+            <Component {...pageProps} />
+          </ThemeProvider>
         </RecoilRoot>
       </Hydrate>
     </QueryClientProvider>
