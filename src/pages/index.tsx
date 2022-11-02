@@ -1,8 +1,15 @@
+import Login from 'src/components/Login';
 import styled from 'styled-components';
 
-const Text = styled.div`
-  font-size: ${({ theme }) => theme.fontSize.title20};
-`;
 export default function Home() {
-  return <Text>모바일버전</Text>;
+  return (
+    <Container>
+      <Login />
+    </Container>
+  );
 }
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+`;
