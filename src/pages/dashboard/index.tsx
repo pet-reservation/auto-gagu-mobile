@@ -22,14 +22,15 @@ const SearchWrap = styled.div`
 
 const SearchInput = styled.input`
   border: none;
-  padding: 5px;
+  padding: 11px;
   flex: 1;
+  outline: none;
 `;
 
 const SearchBtn = styled.button`
   border: none;
   background-color: #275d7c;
-  padding: 5px;
+  padding: 10px;
   color: #fff;
   flex: 1;
 `;

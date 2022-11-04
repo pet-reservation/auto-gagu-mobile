@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { usePurchases } from 'src/common/hook/usePurchases';
 import { IRecipe } from 'src/interface/IRecipe';
 import styled from 'styled-components';
@@ -8,27 +8,45 @@ export const RecipeComponent = () => {
   const limit = 10;
   const [ikeaId, setIkeaId] = useState('');
 
-  const { data, isSuccess } = usePurchases(start, limit, ikeaId);
-  if (isSuccess) {
-    console.log(data);
-  }
+  const { data } = usePurchases(start, limit, ikeaId);
+
+  const handleCopyRecipe = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      alert('영수증 번호가 복사되었습니다.');
+    } catch (e) {
+      alert('복사 실패');
+    }
+  };
+
   return (
     <RecipeContainer>
       {data
         ? data.list.map((recipe: IRecipe) => {
             return (
               <RecipeWrap key={recipe.id}>
-                <Recipe>
-                  <span>
+                <Recipe style={{ fontWeight: 'bold' }}>
+                  <span style={{ display: 'inline-block', width: 200 }}>
                     {new Intl.DateTimeFormat('kr', {
-                      dateStyle: 'medium',
+                      dateStyle: 'full',
                     }).format(new Date(recipe.paymentTime))}{' '}
+                    /
                   </span>
-                  <span>/ {recipe.tag}</span>
+                  <span onClick={() => handleCopyRecipe(recipe.tag)}>
+                    {recipe.tag}
+                  </span>
                 </Recipe>
                 <Recipe>
                   <span>{recipe.storeName} </span>
-                  <span>/ {recipe.paymentAmount}</span>
+                  <span>
+                    / {recipe.status === 'COMPLETE' ? '구매완료' : '진행중'} /{' '}
+                  </span>
+                  <span style={{ fontWeight: 'bold' }}>
+                    {recipe.paymentAmount
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    원
+                  </span>
                 </Recipe>
               </RecipeWrap>
             );
