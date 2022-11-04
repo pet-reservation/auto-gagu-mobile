@@ -1,5 +1,37 @@
+import { RecipeComponent } from 'src/components/RecipeComponent';
+import styled from 'styled-components';
+
 const DashBoard = () => {
-  return <div>김대쉬22</div>;
+  return (
+    <>
+      <SearchWrap>
+        <SearchInput></SearchInput>
+        <SearchBtn>영수증 검색</SearchBtn>
+      </SearchWrap>
+      <RecipeComponent />
+    </>
+  );
 };
+
+const SearchWrap = styled.div`
+  padding: 20px;
+  display: flex;
+  width: 300px;
+  align-items: center;
+`;
+
+const SearchInput = styled.input`
+  border: none;
+  padding: 5px;
+  flex: 1;
+`;
+
+const SearchBtn = styled.button`
+  border: none;
+  background-color: #275d7c;
+  padding: 5px;
+  color: #fff;
+  flex: 1;
+`;
 
 export default DashBoard;
